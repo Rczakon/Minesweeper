@@ -1,0 +1,58 @@
+body{
+    background-color: #00204a;
+    color: #fdb44b;
+    text-align: center;
+}
+
+h1{
+    font-size: 80px;
+}
+
+article{
+    
+}
+
+.board{
+    width:250px;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align:bottom;
+}
+
+.field{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    font-size: 45px;
+    margin-top: 4px;
+    vertical-align: top;
+    padding-top:auto;
+    color: #005792;
+    border: solid;
+    border-color: #fdb44b;
+    background-color: #005792;
+    margin-left: 5px;
+}
+
+#result{
+    font-size: 60px;
+    color: #fdb44b;
+}
+
+button{
+    font-size: 20px;
+    margin-top: 20px;
+}
+input{
+    display: block;
+    margin: auto;
+    width: 70px;
+}
+
+#bombCounter{
+    font-size: 30px;
+    
+}
+
+
+/* 00204a 005792 448ef6 fdb44b */

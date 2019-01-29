@@ -1,0 +1,150 @@
+
+function loadGame(){
+    var fieldArray = [];
+    const uncoveredPath = 'url("img/uncovered.png")';
+    const bombPath = 'url("img/bomb.png")';
+    const flaggedPath = 'url("img/flagged.png")';
+    var bombArray = [];
+    var bomb;
+    var counter = 0;
+    var gameOn = false;
+    var fieldsLeft = 15;
+    //Initializing the array with empty (0) symbols
+
+    for(var i = 0; i < 20; i++){
+        fieldArray[i] = counter;
+    }
+
+    while(bombArray.length < 5){
+        bomb = Math.floor((Math.random() * 20));
+        if(bombArray.indexOf(bomb) === -1){
+            bombArray.push(bomb);
+            fieldArray[bomb] = "*";
+        }
+    }
+    console.log(bombArray);
+    console.log(fieldArray);
+
+    for(var i = 0; i < 20; i++){
+        if(fieldArray[i] == "*"){               
+                    //top left corner
+                    if(i === 0){
+                        if(fieldArray[i+1] != "*") fieldArray[i+1]++;
+                        if(fieldArray[i+4] != "*") fieldArray[i+4]++;
+                        if(fieldArray[i+5] != "*") fieldArray[i+5]++;
+                    }
+                    //top right corner
+                    else if(i === 3){
+                        if(fieldArray[i-1] != "*") fieldArray[i-1]++;
+                        if(fieldArray[i+3] != "*") fieldArray[i+3]++;
+                        if(fieldArray[i+4] != "*") fieldArray[i+4]++;
+                    }
+                    //bottom left corner
+                    else if(i === 16){
+                        if(fieldArray[i-4] != "*") fieldArray[i-4]++;
+                        if(fieldArray[i-3] != "*") fieldArray[i-3]++;
+                        if(fieldArray[i+1] != "*") fieldArray[i+1]++;
+                    }
+                    //bottom right corner
+                    else if(i === 19){
+                        if(fieldArray[i-1] != "*") fieldArray[i-1]++;
+                        if(fieldArray[i-4] != "*") fieldArray[i-4]++;
+                        if(fieldArray[i-5] != "*") fieldArray[i-5]++;
+                    }
+                    //top border 
+                    else if(i === 1 || i === 2){
+                        if(fieldArray[i-1] != "*") fieldArray[i-1]++;
+                        if(fieldArray[i+1] != "*") fieldArray[i+1]++;
+                        if(fieldArray[i+3] != "*") fieldArray[i+3]++;
+                        if(fieldArray[i+4] != "*") fieldArray[i+4]++;
+                        if(fieldArray[i+5] != "*") fieldArray[i+5]++;
+                    }
+                    //bottom border
+                    else if(i === 17 || i === 18){
+                        if(fieldArray[i-1] != "*") fieldArray[i-1]++;
+                        if(fieldArray[i+1] != "*") fieldArray[i+1]++;
+                        if(fieldArray[i-3] != "*") fieldArray[i-3]++;
+                        if(fieldArray[i-4] != "*") fieldArray[i-4]++;
+                        if(fieldArray[i-5] != "*") fieldArray[i-5]++;
+                    }
+                    //left border
+                    else if(i === 4 || i === 8 || i === 12){
+                        if(fieldArray[i-4] != "*") fieldArray[i-4]++;
+                        if(fieldArray[i-3] != "*") fieldArray[i-3]++;
+                        if(fieldArray[i+1] != "*") fieldArray[i+1]++;
+                        if(fieldArray[i+4] != "*") fieldArray[i+4]++;
+                        if(fieldArray[i+5] != "*") fieldArray[i+5]++;
+                    }
+                    //right border
+                    else if(i === 7 || i === 11 || i === 15){
+                        if(fieldArray[i-5] != "*") fieldArray[i-5]++;
+                        if(fieldArray[i-4] != "*") fieldArray[i-4]++;
+                        if(fieldArray[i-1] != "*") fieldArray[i-1]++;
+                        if(fieldArray[i+3] != "*") fieldArray[i+3]++;
+                        if(fieldArray[i+4] != "*") fieldArray[i+4]++;
+                    }
+                    //other fields
+                    else{
+                        if(fieldArray[i-5] != "*") fieldArray[i-5]++;
+                        if(fieldArray[i-4] != "*") fieldArray[i-4]++;
+                        if(fieldArray[i-3] != "*") fieldArray[i-3]++;
+                        if(fieldArray[i-1] != "*") fieldArray[i-1]++;
+                        if(fieldArray[i+1] != "*") fieldArray[i+1]++;
+                        if(fieldArray[i+3] != "*") fieldArray[i+3]++;
+                        if(fieldArray[i+4] != "*") fieldArray[i+4]++;
+                        if(fieldArray[i+5] != "*") fieldArray[i+5]++;
+                    }
+        }
+    }
+
+    $('.field').each(function(i) {
+        $.data(this, "number", i );
+    });
+
+    $('.field').mousedown(function(event) {
+        switch(event.which){
+            case 1:
+            var value = $.data(this, "number");
+            if(fieldArray[value] == "*"){
+                $('.field').each(function(i) {
+                    if(fieldArray[i] == "*"){
+                        $(this).css("background-image", bombPath);
+                    }
+                });
+                gameOn = false;
+                //console.log("le!");
+                $("#result").text("BUM!");
+            }
+            else{
+                $(this).css("background-image", uncoveredPath);
+                $(this).text(fieldArray[value]);
+                console.log(fieldsLeft);
+                if(fieldsLeft === 1){
+                    //console.log("Zwyciêstwo");
+                    $("#result").text("Zwyciêstwo!");
+                }else{
+                    fieldsLeft--;
+                }
+            }
+            break;
+            case 2:
+            $(this).css("background-image", flaggedPath);
+            break;
+            default:
+            alert("Flagi stawia siê rolk¹!");
+        }
+    });
+    //^ koniec listenera
+}
+loadGame();
+
+
+
+// $(".field").click(function(){
+//     $(this).css("background-image", 'url("img/clicked.png")');
+//     //console.log($(this).data('fieldNumber'));
+//     var value = $.data(this, "number");
+//     console.log(value);
+//     console.log(fieldArray);
+// });
+
