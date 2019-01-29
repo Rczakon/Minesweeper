@@ -181,6 +181,7 @@ function clearEverything(){
 }
 
 $("#start").click(function(){
+    clearEverything();
     width = parseInt($("#boardWidth").val());
     height = parseInt($("#boardHeight").val());
     loadGame(width, height);
